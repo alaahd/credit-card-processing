@@ -1,6 +1,6 @@
 # Credit Card Processing
 
-A project that runs an Express Node server (RESTful API) and a create-react-app app via two separate containers, using Docker Compose.
+A project that runs an Express Node server (RESTful API) and a create-react-app application via two separate containers, using Docker Compose.
 
 ## Run the project (Development Mode)
 
@@ -10,7 +10,7 @@ A project that runs an Express Node server (RESTful API) and a create-react-app 
 docker-compose down
 ```
 
-### 2- Remove any exisitng containers
+### 2- Remove exisitng containers
 
 ```
 docker-compose rm -f
@@ -33,6 +33,9 @@ For development, the `server/` and `client/` directories have their own docker c
 The client server is spun up at `http://localhost:3000` and it proxies internally to the server using the linked name as `http://localhost:8080`.
 
 ### Notes
+
+If you face any issue in the first load of the application, try to restart services that are not responding using the commands below:
+
 
 #### Restart server
 
