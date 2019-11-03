@@ -10,7 +10,7 @@ A project that runs an Express Node server (RESTful API) and a create-react-app 
 docker-compose down
 ```
 
-### 2- Remove any exisitng containers
+### 2- Remove exisitng containers
 
 ```
 docker-compose rm -f
