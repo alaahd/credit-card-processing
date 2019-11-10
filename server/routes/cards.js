@@ -1,18 +1,23 @@
 var express = require("express");
-var database = require("../db");
 const { ObjectId } = require("mongodb");
 var luhn = require("luhn");
 var router = express.Router();
+
+// let db;
 
 const prepare = item => ({
   ...item,
   id: item._id.toString()
 });
 
+// router.use("/", function(req, res, next) {
+//   db = req.app.get("database");
+//   next();
+// });
+
 /* GET cards listing. */
 router.get("/", async function(req, res, next) {
-  const db = await database();
-
+  const db = req.app.locals.database;
   const cards = db.collection("cards");
   const cardsList = await cards
     .find({})
@@ -26,8 +31,7 @@ router.get("/", async function(req, res, next) {
 
 /* POST add new card. */
 router.post("/", async function(req, res, next) {
-  const db = await database();
-
+  const db = req.app.locals.database;
   const { name, number, limit } = req.body;
 
   if (!name || !number || !limit) {
@@ -80,8 +84,7 @@ router.post("/", async function(req, res, next) {
 
 // DELETE ALL CARDS TO RESET THE DATA
 router.delete("/", async function(req, res, next) {
-  const db = await database();
-
+  const db = req.app.locals.database;
   const cards = db.collection("cards");
   await cards.remove({});
   const cardsList = await cards.find({}).toArray();

@@ -3,6 +3,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const bodyParser = require("body-parser");
+const { MongoClient, ObjectId } = require("mongodb");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -18,6 +19,26 @@ app.use(function(req, res, next) {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   next();
+});
+
+// connect to mongodb database
+app.use(function(req, res, next) {
+  const URI =
+    "mongodb://alaa:alaa@host.docker.internal:27017?retryWrites=true&w=majority";
+
+  const client = new MongoClient(URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+
+  client.connect(err => {
+    if (err) {
+      res.status(400).send("Error connecting to mongodb " + err.message);
+    }
+    console.log("connected to database");
+    app.locals.database = client.db("psdatabase");
+    next();
+  });
 });
 
 app.use(logger("dev"));
