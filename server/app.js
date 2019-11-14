@@ -23,10 +23,9 @@ app.use(function(req, res, next) {
 
 // connect to mongodb database
 app.use(function(req, res, next) {
-  const URI =
-    "mongodb://alaa:alaa@host.docker.internal:27017?retryWrites=true&w=majority";
+  const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
-  const client = new MongoClient(URI, {
+  const client = new MongoClient(DB_CONNECTION_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   });
